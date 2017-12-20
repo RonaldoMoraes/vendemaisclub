@@ -84,7 +84,57 @@ paths:
           description: User successfully logged in
         400:
           description: invalid input, object invalid
-        
+  /api/auth/users:
+    get:
+      tags:
+      - logged
+      summary: get all users
+      operationId: getUsers
+      description: Get all Users of the system
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: token
+        type: string
+        description: authentication token
+        required: true
+        #schema:
+        #  $ref: '#/definitions/User'
+      responses:
+        200:
+          description: Users being listed
+        400:
+          description: invalid input, object invalid
+  /api/auth/users/{userId}:  
+    put:
+      tags:
+      - logged
+      summary: update user
+      operationId: updateUser
+      description: Update a User by a given ID
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: token
+          type: string
+          description: authentication token
+          required: true
+        - in: path
+          name: userId
+          type: integer
+          required: true
+          description: Numeric ID of the user to get.
+      responses:
+        200:
+          description: Users being listed
+        400:
+          description: invalid input, object invalid
 definitions:
   User:
     type: object
