@@ -26,6 +26,6 @@ Route::group([
 ], function ($router) {
 
     Route::post('register', 'AuthController@register');
-    //Route::post('login', 'AuthController@login');
+    Route::post('login', 'AuthController@login');
 
 });
