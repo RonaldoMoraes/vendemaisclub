@@ -18,16 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// From http://jwt-auth.readthedocs.io/en/docs/quick-start/#add-some-basic-authentication-routes
 Route::group([
 
     'middleware' => 'api',
-    'namespace' => 'App\Http\Controllers',
     'prefix' => 'auth'
 
 ], function ($router) {
 
-    //Route::post('logon', 'AuthController@logon');
+    Route::post('register', 'AuthController@register');
     //Route::post('login', 'AuthController@login');
 
 });
