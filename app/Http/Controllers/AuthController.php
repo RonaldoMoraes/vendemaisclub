@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     private $user;
     public function __construct(User $user){
-        $this->middleware('auth:api', ['except' => ['register']]);
+        $this->middleware('auth:api', ['except' => ['register', 'login']]);
         $this->user = $user;
     }
 
@@ -25,6 +25,25 @@ class AuthController extends Controller
             'status'=>true,
             'message'=>'Usuário criado com sucesso',
             'data'=>$user
+        ]);
+    }
+
+    public function login(Request $request){
+        $credentials = $request->only('email', 'password');
+
+        if ($token = $this->guard()->attempt($credentials)) {
+            return $this->respondWithToken($token);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+
+    protected function respondWithToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $this->guard()->factory()->getTTL() * 60
         ]);
     }
 
