@@ -28,9 +28,29 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUsers(Request $request){
+    public function getUsers(){
         $users = User::all();
-        return response()->json(['result' => $users]);
+        return response()->json(['data' => $users]);
+    }
+
+    public function update(User $user, Request $request){
+
+        if (empty($user)) {
+            return response()->json(['data' => $user, 'message' => 'User not found']);
+        }
+
+        if ($request->get('name')!=''){
+            $user->name = $request->get('name');
+        }
+        if ($request->get('email')!=''){
+            $user->email = $request->get('email');
+        }
+        if ($request->get('password')!=''){
+            $user->password = bcrypt($request->get('password'));
+        }
+        $user->save();
+
+        return response()->json(['data' => $user]);
     }
 
 }

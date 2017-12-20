@@ -27,6 +27,7 @@ Route::group([
 
     Route::post('register', 'UserController@register');
     Route::get('users', 'UserController@getUsers');
+    Route::put('users/{user}', 'UserController@update');
     Route::post('login', 'AuthController@login');
 
 });
