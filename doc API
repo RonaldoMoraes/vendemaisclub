@@ -1,0 +1,132 @@
+swagger: '2.0'
+info:
+  description: API do teste proposto pela Vende+ Club
+  version: 1.0.0
+  title: Teste Vende+ API
+  # put the contact info for your development or API team
+  contact:
+    email: ronaldo.moraes1990@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: logged
+  description: Secured logged-only user calls
+- name: unlogged
+  description: Operations available only for unlogged users
+
+paths:
+  /api/auth/register:
+    post:
+      tags:
+      - unlogged
+      summary: creates an user
+      operationId: registerUser
+      description: Create a new User to the system
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: name
+        type: string
+        description: The name of new User to be created
+        required: true
+      - in: formData
+        name: email
+        type: string
+        description: The email of new User to be created
+        required: true
+      - in: formData
+        name: password
+        type: string
+        description: The password of new User to be created
+        required: true
+        #schema:
+        #  $ref: '#/definitions/User'
+      responses:
+        201:
+          description: User was successfully created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /api/auth/login:
+    post:
+      tags:
+      - unlogged
+      summary: login for user
+      operationId: loginUser
+      description: Log the User in the system
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: email
+        type: string
+        description: The email of new User to be created
+        required: true
+      - in: formData
+        name: password
+        type: string
+        description: The password of new User to be created
+        required: true
+        #schema:
+        #  $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User successfully logged in
+        400:
+          description: invalid input, object invalid
+        
+definitions:
+  User:
+    type: object
+    required:
+    - id
+    - name
+    - email
+    - password
+    - created_at
+    - updated_at
+    - deleted_at
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        format: uuid
+        example: Ronaldo
+      email:
+        type: string
+        format: uuid
+        example: ronaldo@mail.com
+      password:
+        type: string
+        format: uuid
+        example: lalala123
+      created_at:
+        type: string
+        format: uuid
+        example: 2016-08-29T09:12:33.001Z
+      updated_at:
+        type: string
+        format: uuid
+        example: 2016-08-29T09:12:33.001Z
+      deleted_at:
+        type: string
+        format: uuid
+        example: 2016-08-29T09:12:33.001Z
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /RonaldoMoraes1/TesteSimpleApi/1.0.0
+schemes:
+ - https
+ - http

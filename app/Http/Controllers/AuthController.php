@@ -9,23 +9,9 @@ use App\User;
 
 class AuthController extends Controller
 {
-    private $user;
+    
     public function __construct(User $user){
-        $this->middleware('auth:api', ['except' => ['register', 'login']]);
-        $this->user = $user;
-    }
-
-    public function register(Request $request){
-        $user = $this->user->create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password'))
-        ]);
-        return response()->json([
-            'status'=>true,
-            'message'=>'Usuário criado com sucesso',
-            'data'=>$user
-        ]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function login(Request $request){
