@@ -1,0 +1,196 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API do teste proposto pela Vende+ Club",
+    "version" : "1.0.0",
+    "title" : "Teste Vende+ API",
+    "contact" : {
+      "email" : "ronaldo.moraes1990@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost:8000",
+  "basePath" : "/RonaldoMoraes1/TesteSimpleApi/1.0.0",
+  "tags" : [ {
+    "name" : "logged",
+    "description" : "Secured logged-only user calls"
+  }, {
+    "name" : "unlogged",
+    "description" : "Operations available only for unlogged users"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/api/auth/register" : {
+      "post" : {
+        "tags" : [ "unlogged" ],
+        "summary" : "creates an user",
+        "description" : "Create a new User to the system",
+        "operationId" : "registerUser",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "formData",
+          "description" : "The name of new User to be created",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "in" : "formData",
+          "description" : "The email of new User to be created",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "in" : "formData",
+          "description" : "The password of new User to be created",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "User was successfully created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    },
+    "/api/auth/login" : {
+      "post" : {
+        "tags" : [ "unlogged" ],
+        "summary" : "login for user",
+        "description" : "Log the User in the system",
+        "operationId" : "loginUser",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "formData",
+          "description" : "The email of new User to be created",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "in" : "formData",
+          "description" : "The password of new User to be created",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User successfully logged in"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/api/auth/users" : {
+      "get" : {
+        "tags" : [ "logged" ],
+        "summary" : "get all users",
+        "description" : "Get all Users of the system",
+        "operationId" : "getUsers",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "formData",
+          "description" : "authentication token",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Users being listed"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/api/auth/users/{userId}" : {
+      "put" : {
+        "tags" : [ "logged" ],
+        "summary" : "update user",
+        "description" : "Update a User by a given ID",
+        "operationId" : "updateUser",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "formData",
+          "description" : "authentication token",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Numeric ID of the user to get.",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Users being listed"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "User" : {
+      "type" : "object",
+      "required" : [ "created_at", "deleted_at", "email", "id", "name", "password", "updated_at" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "name" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "Ronaldo"
+        },
+        "email" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "ronaldo@mail.com"
+        },
+        "password" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "lalala123"
+        },
+        "created_at" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "2016-08-29T09:12:33.001Z"
+        },
+        "updated_at" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "2016-08-29T09:12:33.001Z"
+        },
+        "deleted_at" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "2016-08-29T09:12:33.001Z"
+        }
+      }
+    }
+  }
+}
