@@ -26,8 +26,22 @@ Route::group([
 ], function ($router) {
 
     Route::post('register', 'UserController@register');
-    Route::get('users', 'UserController@getUsers');
-    Route::put('users/{user}', 'UserController@update');
     Route::post('login', 'AuthController@login');
+
+});
+
+Route::group([
+
+    'middleware' => 'api',
+
+], function ($router) {
+
+    #lista users
+    Route::get('users', 'UserController@getUsers');
+    #edita user
+    Route::put('users/{user}', 'UserController@update');
+    Route::patch('users/{user}', 'UserController@update');
+    #desabilita user
+    Route::delete('users/{user}', 'UserController@delete');
 
 });
