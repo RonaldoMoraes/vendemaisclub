@@ -1,5 +1,9 @@
 1-> Criar banco de dados (atualmente usando mysql, nome: vendemaisclub)
 
-2-> Executar no terminal "php artisan key:generate"
+2-> Executar no terminal:
 
-3-> Executar no terminal "php artisan jwt:secret"
+"php artisan migrate"
+
+"php artisan key:generate"
+
+"php artisan jwt:secret"
