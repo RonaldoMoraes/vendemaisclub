@@ -53,4 +53,12 @@ class UserController extends Controller
         return response()->json(['data' => $user]);
     }
 
+    public function delete(User $user){
+        if (empty($user)) {
+            return response()->json(['data' => $user, 'message' => 'User not found']);
+        }
+        $user->delete();
+        return response()->json(['message' => 'User deleted']);
+    }
+
 }
