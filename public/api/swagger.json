@@ -1,279 +1,334 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "API do teste proposto pela Vende+ Club",
-    "version" : "1.0.0",
-    "title" : "Teste Vende+ API",
-    "contact" : {
-      "email" : "ronaldo.moraes1990@gmail.com"
+    "swagger": "2.0",
+    "info": {
+        "title": "Teste Vende+ API",
+        "description": "API do teste proposto pela Vende+ Club",
+        "contact": {
+            "name": "Ronaldo Moraes",
+            "email": "ronaldo.moraes1990@gmail.com"
+        },
+        "version": "1.0.0"
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "host": "localhost:8000",
+    "basePath": "",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "unlogged"
+                ],
+                "summary": "Log the User in the system.",
+                "description": "Log the User in the system.",
+                "operationId": "loginUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "The email of the User to be logged in",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "The password of the User to be logged in",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User logged in with success."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "unlogged"
+                ],
+                "summary": "Creates a new user in the system.",
+                "description": "Create a new User to the system.",
+                "operationId": "registerUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "The name of the new User to be created",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "The email of the new User to be created",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "The password of the new User to be created",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User was successfully created."
+                    },
+                    "401": {
+                        "description": "Unauthorized action"
+                    },
+                    "409": {
+                        "description": "An existing item already exists."
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "logged"
+                ],
+                "summary": "Get all active users of the system",
+                "description": "Get all active Users of the system.",
+                "operationId": "getUsers",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "authentication token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Users being listed."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "400": {
+                        "description": "Invalid input, object invalid."
+                    }
+                }
+            }
+        },
+        "/api/users/{userId}": {
+            "put": {
+                "tags": [
+                    "logged"
+                ],
+                "summary": "Update an user",
+                "description": "Update an User by a given ID.",
+                "operationId": "updateUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Numeric ID of the user to get.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "authentication token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "New name of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "New email of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "New password of the user",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data updated."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "logged"
+                ],
+                "summary": "Delete an user",
+                "description": "Delete an User by a given ID.",
+                "operationId": "deleteUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Numeric ID of the user to be deleted.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "authentication token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User safely deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "logged"
+                ],
+                "summary": "Update an user",
+                "description": "Update an User by a given ID.",
+                "operationId": "update2User",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Numeric ID of the user to get.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "authentication token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "New name of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "New email of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "New password of the user",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data updated."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "required": [
+                "id",
+                "name",
+                "email",
+                "password"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Class User",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Class User",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "Class User",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Class User",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Class User",
+                    "type": "timestamp"
+                },
+                "updated_at": {
+                    "description": "Class User",
+                    "type": "timestamp"
+                },
+                "deleted_at": {
+                    "description": "Class User",
+                    "type": "timestamp"
+                }
+            }
+        }
     }
-  },
-  "host" : "localhost:8000",
-  "basePath" : "",
-  "tags" : [ {
-    "name" : "logged",
-    "description" : "Secured logged-only user calls"
-  }, {
-    "name" : "unlogged",
-    "description" : "Operations available only for unlogged users"
-  } ],
-  "schemes" : [ "http" ],
-  "paths" : {
-    "/api/auth/register" : {
-      "post" : {
-        "tags" : [ "unlogged" ],
-        "summary" : "creates an user",
-        "description" : "Create a new User to the system",
-        "operationId" : "registerUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "query",
-          "description" : "The name of new User to be created",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "email",
-          "in" : "query",
-          "description" : "The email of new User to be created",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "password",
-          "in" : "query",
-          "description" : "The password of new User to be created",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "User was successfully created"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing item already exists"
-          }
-        }
-      }
-    },
-    "/api/auth/login" : {
-      "post" : {
-        "tags" : [ "unlogged" ],
-        "summary" : "login for user",
-        "description" : "Log the User in the system",
-        "operationId" : "loginUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "email",
-          "in" : "query",
-          "description" : "The email of new User to be created",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "password",
-          "in" : "query",
-          "description" : "The password of new User to be created",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User successfully logged in"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
-    "/api/users" : {
-      "get" : {
-        "tags" : [ "logged" ],
-        "summary" : "get all users",
-        "description" : "Get all Users of the system",
-        "operationId" : "getUsers",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "authentication token",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Users being listed"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          }
-        }
-      }
-    },
-    "/api/users/{userId}" : {
-      "put" : {
-        "tags" : [ "logged" ],
-        "summary" : "update user",
-        "description" : "Update a User by a given ID",
-        "operationId" : "updateUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "authentication token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "Numeric ID of the user to get.",
-          "required" : true,
-          "type" : "integer"
-        },{
-          "name" : "name",
-          "in" : "query",
-          "description" : "The name of the user",
-          "required" : false,
-          "type" : "string"
-        },{
-          "name" : "email",
-          "in" : "query",
-          "description" : "The email of the user",
-          "required" : false,
-          "type" : "string"
-        },{
-          "name" : "password",
-          "in" : "query",
-          "description" : "The password of the user",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User data updated"
-          },
-          "404" : {
-            "description" : "User not found"
-          }
-        }
-      },
-      "patch" : {
-        "tags" : [ "logged" ],
-        "summary" : "update user",
-        "description" : "Update a User by a given ID",
-        "operationId" : "updateUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "authentication token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "Numeric ID of the user to get.",
-          "required" : true,
-          "type" : "integer"
-        },{
-          "name" : "name",
-          "in" : "query",
-          "description" : "The name of the user",
-          "required" : false,
-          "type" : "string"
-        },{
-          "name" : "email",
-          "in" : "query",
-          "description" : "The email of the user",
-          "required" : false,
-          "type" : "string"
-        },{
-          "name" : "password",
-          "in" : "query",
-          "description" : "The password of the user",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User data updated"
-          },
-          "404" : {
-            "description" : "User not found"
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "logged" ],
-        "summary" : "delete user",
-        "description" : "Delete a User by a given ID",
-        "operationId" : "deleteUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "authentication token",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "Numeric ID of the user to be deleted",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User safetly deleted"
-          },
-          "404" : {
-            "description" : "User not found"
-          }
-        }
-      }
-    }
-    
-  },
-  "definitions" : {
-    "User" : {
-      "type" : "object",
-      "required" : [ "email", "id", "name", "password" ],
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "example" : 1
-        },
-        "name" : {
-          "type" : "string",
-          "example" : "Ronaldo"
-        },
-        "email" : {
-          "type" : "string",
-          "example" : "ronaldo@mail.com"
-        },
-        "password" : {
-          "type" : "string",
-          "example" : "lalala123"
-        },
-        "created_at" : {
-          "type" : "timestamp",
-          "example" : "2016-08-29T09:12:33.001Z"
-        },
-        "updated_at" : {
-          "type" : "timestamp",
-          "example" : "2016-08-29T09:12:33.001Z"
-        },
-        "deleted_at" : {
-          "type" : "timestamp",
-          "example" : "2016-08-29T09:12:33.001Z"
-        }
-      }
-    }
-  }
 }
